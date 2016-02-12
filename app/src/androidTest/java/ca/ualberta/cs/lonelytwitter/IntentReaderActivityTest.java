@@ -3,6 +3,7 @@ package ca.ualberta.cs.lonelytwitter;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.ViewAsserts;
+import android.view.View;
 import android.widget.TextView;
 
 /**
@@ -56,6 +57,38 @@ public class IntentReaderActivityTest extends ActivityInstrumentationTestCase2{
 
     //TODO: Add your code here ...
 //-------------------------------------------------------------------------------
+    public void testReverseText(){
+        Intent intent = new Intent();
+        intent.putExtra(IntentReaderActivity.TEXT_TO_TRANSFORM_KEY, "message 4");
+        intent.putExtra(IntentReaderActivity.MODE_OF_TRANSFORM_KEY,
+                IntentReaderActivity.REVERSE);
 
+        setActivityIntent(intent);
+        IntentReaderActivity ira = (IntentReaderActivity) getActivity();
+        assertEquals("The text should be in reverse order!", "4 egassem",
+                ira.getText());
+    }
+
+    public void testDefaultText(){
+        Intent intent = new Intent();
+
+        setActivityIntent(intent);
+        IntentReaderActivity ira = (IntentReaderActivity) getActivity();
+        assertEquals("The text should be the default text!", "default text",
+                ira.getText());
+    }
+
+    public void testVisibleTextview(){
+        Intent intent = new Intent();
+
+        setActivityIntent(intent);
+        IntentReaderActivity ira = (IntentReaderActivity) getActivity();
+
+        View view = ira.getWindow().getDecorView();
+        TextView textView = (TextView) ira.findViewById(R.id.intentText);
+
+        ViewAsserts.assertOnScreen(view, textView);
+
+    }
 //-------------------------------------------------------------------------------
 }
